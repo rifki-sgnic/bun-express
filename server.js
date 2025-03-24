@@ -1,3 +1,4 @@
+import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 import express from "express";
 import morgan from "morgan";
@@ -19,6 +20,7 @@ connectDB();
 secureServer(app, isProduction);
 serverLogger(app, isProduction);
 
+app.use(cookieParser());
 app.use(express.json());
 app.use(morgan("dev"));
 

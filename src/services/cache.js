@@ -19,8 +19,6 @@ const CacheService = {
   },
 
   async setUser(userId, userData) {
-    console.log(userData);
-
     const cacheKey = `user:${userId}`;
     await redisClient.set(
       cacheKey,

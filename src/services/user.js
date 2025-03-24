@@ -52,9 +52,9 @@ const UserService = {
   },
 
   async addUser(userData) {
-    const { name, email, password } = userData;
-    if (!name || !email || !password)
-      throw new Error("Name, Email and Password are required");
+    const { name, username, email, password } = userData;
+    if (!name || !username || !email || !password)
+      throw new Error("Name, Username, Email and Password are required");
 
     const newUser = await UserRepository.saveUser(userData);
 

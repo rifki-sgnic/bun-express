@@ -4,6 +4,7 @@ import path from "path";
 import { createStream } from "rotating-file-stream";
 import winston from "winston";
 import DailyRotateFile from "winston-daily-rotate-file";
+import { LOG_DIR, LOG_LEVEL } from "../config/config";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -16,7 +17,7 @@ function httpLogger(isProduction = false) {
 
   const logStream = createStream("https.log", {
     interval: "1d",
-    path: path.join(__dirname, process.env.LOGDIR || "../logs"),
+    path: path.join(__dirname, LOG_DIR),
     compress: "gzip",
     maxFiles: 90,
   });
@@ -45,14 +46,14 @@ export function serverLogger(expressApp, isProduction = false) {
   } else {
     const fileRotateTransport = new DailyRotateFile({
       filename: "combined-%DATE%.log",
-      dirname: path.join(__dirname, process.env.LOGDIR || "../logs"),
+      dirname: path.join(__dirname, LOG_DIR),
       datePattern: "YYYY-MM-DD",
       maxFiles: "30d",
       zippedArchive: true, // Automatically compress old logs
     });
 
     winstonConf = {
-      level: process.env.LOG_LEVEL || "info",
+      level: LOG_LEVEL,
       format: combine(errors({ stack: true }), timestamp(), json()),
       transports: [fileRotateTransport],
     };
