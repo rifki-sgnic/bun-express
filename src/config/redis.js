@@ -1,9 +1,8 @@
 import Redis from "ioredis";
 import { logger } from "../utils/logger";
+import { REDIS_URL } from "./config";
 
-const redisUrl = process.env.REDIS_URL || "redis://localhost:6379";
-
-const redisClient = new Redis(redisUrl);
+const redisClient = new Redis(REDIS_URL);
 
 redisClient.on("error", (error) => {
   logger.error(`Redis Error: ${error.message}`);

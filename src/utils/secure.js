@@ -1,8 +1,9 @@
 import cors from "cors";
+import { APP_URL } from "../config/config";
 
 export function secureServer(expressApp = null, isProduction = false) {
   const corsOptionDev = {
-    origin: process.env.BUN_URL || "*",
+    origin: APP_URL || "*",
     optionSuccessStatus: 200,
     credentials: true,
   };
