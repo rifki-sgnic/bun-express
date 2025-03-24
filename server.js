@@ -1,17 +1,14 @@
 import cookieParser from "cookie-parser";
-import dotenv from "dotenv";
 import express from "express";
 import morgan from "morgan";
+import { APP_ENV, PORT } from "./src/config/config";
 import { connectDB } from "./src/config/db";
 import router from "./src/routes";
 import { logger, serverLogger } from "./src/utils/logger";
 import { secureServer } from "./src/utils/secure";
 
-dotenv.config();
-
 const app = express();
-const PORT = process.env.PORT || 3001;
-const isProduction = process.env.NODE_ENV === "production";
+const isProduction = APP_ENV === "production";
 
 // connect mongo
 connectDB();
