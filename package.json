@@ -3,10 +3,14 @@
   "module": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "bun --watch server.js"
+    "dev": "bun --watch server.js",
+    "lint": "bunx eslint . --config eslint.config.js --fix"
   },
   "devDependencies": {
-    "@types/bun": "latest"
+    "@eslint/js": "^9.23.0",
+    "@types/bun": "latest",
+    "eslint": "^9.23.0",
+    "globals": "^16.0.0"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
@@ -16,6 +20,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
+    "figlet": "^1.8.0",
     "ioredis": "^5.6.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.12.2",
