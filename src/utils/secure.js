@@ -1,7 +1,7 @@
 import cors from "cors";
 import { APP_URL } from "../config/config";
 
-export function secureServer(expressApp = null, isProduction = false) {
+export function secureServer(expressApp = null) {
   const corsOptionDev = {
     origin: APP_URL || "*",
     optionSuccessStatus: 200,
@@ -20,6 +20,16 @@ export function secureServer(expressApp = null, isProduction = false) {
       message = "Success",
       statusCode = 200
     ) {
+      if (this.newAccessToken) {
+        const newAccessToken = this.newAccessToken;
+
+        return this.status(statusCode).json({
+          success: true,
+          message,
+          data,
+          newAccessToken,
+        });
+      }
       return this.status(statusCode).json({ success: true, message, data });
     };
 
@@ -40,6 +50,7 @@ export function secureServer(expressApp = null, isProduction = false) {
       }
 
       // Convert error to plain text (remove ANSI color codes)
+      // eslint-disable-next-line no-control-regex
       errorMessage = errorMessage.replace(/\x1B\[\d+m/g, ""); // Strip ANSI color codes
 
       return this.status(statusCode).json({
