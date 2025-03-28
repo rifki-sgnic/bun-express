@@ -1,3 +1,4 @@
+import RoleRepository from "../repositories/role";
 import UserRepository from "../repositories/user";
 import CacheService from "./cache";
 
@@ -56,7 +57,16 @@ const UserService = {
     if (!name || !username || !email || !password)
       throw new Error("Name, Username, Email and Password are required");
 
-    const newUser = await UserRepository.saveUser(userData);
+    const role = await RoleRepository.getRoleByName("user"); // set default role to user
+    if (!role) {
+      throw new Error("Role not found");
+    }
+
+    const newUser = await UserRepository.saveUser({
+      ...userData,
+      roleId: role._id,
+      roleName: role.name,
+    });
 
     // Clear cache for this user so next fetch will be fresh
     await CacheService.clearUserCache(newUser._id.toString());
