@@ -1,4 +1,5 @@
 import { redisClient } from "../config/redis";
+import { logger } from "../utils/logger";
 
 const CacheRepository = {
   async getCache(key) {
@@ -6,6 +7,7 @@ const CacheRepository = {
       const data = await redisClient.get(key);
       return data ? JSON.parse(data) : null;
     } catch (error) {
+      logger.error(error);
       return null;
     }
   },
